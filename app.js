@@ -13,8 +13,8 @@ const WEDDING_DATE = "20.Června 2026";
 // 1. CLOUD_NAME najdete v Cloudinary Dashboardu.
 // 2. UPLOAD_PRESET je unsigned preset, ktery si vytvorite v Settings > Upload.
 // 3. GALLERY_TAG ponechte stejne jako v uploadu, nebo zmente pro jinou svatbu.
-const CLOUD_NAME = "VYPLNTE_CLOUD_NAME";
-const UPLOAD_PRESET = "VYPLNTE_UNSIGNED_UPLOAD_PRESET";
+const CLOUD_NAME = "dfukp8thk";
+const UPLOAD_PRESET = "svatba_unsigned";
 const GALLERY_TAG = "wedding2026";
 const UPLOAD_FOLDER = "wedding2026";
 const GALLERY_REFRESH_INTERVAL_MS = 30000;
