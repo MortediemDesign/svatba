@@ -3,8 +3,8 @@
 // =========================
 // Nastaveni svatby
 // =========================
-const COUPLE_NAMES = "Anna & Tomas";
-const WEDDING_DATE = "20. cervna 2026";
+const COUPLE_NAMES = "Jana & Miguel";
+const WEDDING_DATE = "20.Června 2026";
 
 // =========================
 // Cloudinary nastaveni
