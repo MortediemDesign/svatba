@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Svatebni fotogalerie pro hosty">
+    <title>Svatebni fotogalerie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://upload-widget.cloudinary.com/latest/global/all.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Svatebni galerie</p>
+        <h1 id="coupleNames">Nevesta &amp; Zenich</h1>
+        <p id="weddingDate" class="hero__date">1. cervna 2026</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="upload-panel" aria-labelledby="uploadTitle">
+        <div>
+          <p class="section-kicker">Nahrajte sve vzpominky</p>
+          <h2 id="uploadTitle">Sdilejte fotky ze svatby</h2>
+          <p class="section-copy">Napiste sve jmeno, vyberte fotky a poslete je do spolecne galerie pro vsechny hosty.</p>
+        </div>
+
+        <form id="uploadForm" class="upload-form">
+          <label for="guestName">Vase jmeno</label>
+          <div class="upload-row">
+            <input id="guestName" name="guestName" type="text" autocomplete="name" placeholder="napr. Jana Novakova" required>
+            <button id="uploadButton" type="submit">Vybrat fotky</button>
+          </div>
+          <p id="uploadStatus" class="status-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="galleryTitle">
+        <div class="gallery-heading">
+          <div>
+            <p class="section-kicker">Spolecna galerie</p>
+            <h2 id="galleryTitle">Fotky od hostu</h2>
+          </div>
+          <button id="refreshButton" type="button" class="secondary-button">Obnovit galerii</button>
+        </div>
+
+        <div id="galleryStatus" class="gallery-status" role="status" aria-live="polite">Nacitam fotky...</div>
+        <div id="galleryGrid" class="gallery-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button id="closeLightbox" type="button" class="lightbox__close" aria-label="Zavrit nahled">x</button>
+      <figure class="lightbox__figure">
+        <img id="lightboxImage" src="" alt="">
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+    </div>
+  </body>
+</html>
