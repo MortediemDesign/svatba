@@ -19,6 +19,7 @@ const GALLERY_TAG = "wedding2026";
 const UPLOAD_FOLDER = "wedding2026";
 const GALLERY_REFRESH_INTERVAL_MS = 30000;
 const LOCAL_CACHE_KEY = `wedding-gallery-${GALLERY_TAG}`;
+const GUEST_NAME_STORAGE_KEY = `wedding-gallery-guest-name-${GALLERY_TAG}`;
 
 // Verejny seznam fotek bez backendu. Funguje, kdyz jsou fotky oznacene tagem
 // GALLERY_TAG a v Cloudinary je dostupny client-side resource list.
@@ -46,8 +47,12 @@ let isGalleryLoading = false;
 document.addEventListener("DOMContentLoaded", () => {
   elements.coupleNames.textContent = COUPLE_NAMES;
   elements.weddingDate.textContent = WEDDING_DATE;
+  elements.guestName.value = getSavedGuestName();
 
   elements.uploadForm.addEventListener("submit", handleUploadSubmit);
+  elements.guestName.addEventListener("input", () => {
+    saveGuestName(elements.guestName.value.trim());
+  });
   elements.refreshButton.addEventListener("click", loadGallery);
   elements.closeLightbox.addEventListener("click", closeLightbox);
   elements.lightbox.addEventListener("click", (event) => {
@@ -92,6 +97,7 @@ function handleUploadSubmit(event) {
   }
 
   openUploadWidget(guestName);
+  saveGuestName(guestName);
 }
 
 function openUploadWidget(guestName) {
@@ -280,5 +286,26 @@ function getCachedPhotos() {
   } catch (error) {
     console.warn("Lokalni cache galerie nejde precist.", error);
     return [];
+  }
+}
+
+function saveGuestName(guestName) {
+  try {
+    if (guestName) {
+      localStorage.setItem(GUEST_NAME_STORAGE_KEY, guestName);
+    } else {
+      localStorage.removeItem(GUEST_NAME_STORAGE_KEY);
+    }
+  } catch (error) {
+    console.warn("Jmeno hosta se nepodarilo ulozit.", error);
+  }
+}
+
+function getSavedGuestName() {
+  try {
+    return localStorage.getItem(GUEST_NAME_STORAGE_KEY) || "";
+  } catch (error) {
+    console.warn("Ulozene jmeno hosta nejde nacist.", error);
+    return "";
   }
 }
