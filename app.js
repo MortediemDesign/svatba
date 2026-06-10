@@ -144,9 +144,7 @@ async function loadGallery() {
   setStatus(elements.galleryStatus, "Nacitam fotky...");
 
   try {
-    // Používejte váš Vercel API místo přímého Cloudinary
-    const VERCEL_API = "https://vase-domena.vercel.app/api/photos";
-
+    const VERCEL_API = "https://svatba-phi-gules.vercel.app/api/photos";
     const response = await fetch(VERCEL_API, { cache: "no-store" });
     if (!response.ok) throw new Error(`API vratilo ${response.status}`);
 
