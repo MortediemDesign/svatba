@@ -139,30 +139,24 @@ function openUploadWidget(guestName) {
 
 async function loadGallery() {
   if (isGalleryLoading) return;
-
   isGalleryLoading = true;
   elements.refreshButton.disabled = true;
   setStatus(elements.galleryStatus, "Nacitam fotky...");
 
-  if (!hasCloudinaryConfig()) {
-    elements.galleryGrid.innerHTML = "";
-    setStatus(elements.galleryStatus, "Galerie ceka na doplneni Cloudinary nastaveni v app.js.", "error");
-    elements.refreshButton.disabled = false;
-    return;
-  }
-
   try {
-    const response = await fetch(`${CLOUDINARY_LIST_URL}?v=${Date.now()}`, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Cloudinary vratilo stav ${response.status}`);
+    // Používejte váš Vercel API místo přímého Cloudinary
+    const VERCEL_API = "https://vase-domena.vercel.app/api/photos";
 
-    const data = await response.json();
-    const photos = Array.isArray(data.resources) ? data.resources : [];
+    const response = await fetch(VERCEL_API, { cache: "no-store" });
+    if (!response.ok) throw new Error(`API vratilo ${response.status}`);
 
+    const photos = await response.json();
     renderGallery(photos);
     saveCachedPhotos(photos);
+    
     setStatus(
       elements.galleryStatus,
-      photos.length ? `Nacteno ${photos.length} fotek.` : "Zatim tu nejsou zadne fotky. Budte prvni.",
+      photos.length ? `Nacteno ${photos.length} fotek.` : "Zatim tu nejsou zadne fotky.",
       photos.length ? "success" : ""
     );
   } catch (error) {
@@ -170,18 +164,9 @@ async function loadGallery() {
     const cachedPhotos = getCachedPhotos();
     if (cachedPhotos.length) {
       renderGallery(cachedPhotos);
-      setStatus(
-        elements.galleryStatus,
-        "Galerii se nepodarilo aktualizovat. Zobrazujeme posledni ulozenou verzi.",
-        "error"
-      );
+      setStatus(elements.galleryStatus, "Offline mód - zobrazuji poslední verzi.", "error");
     } else {
-      elements.galleryGrid.innerHTML = "";
-      setStatus(
-        elements.galleryStatus,
-        "Galerii se nepodarilo nacist. Fotky jsou v bezpeci v Cloudinary, zkuste obnovit pozdeji.",
-        "error"
-      );
+      setStatus(elements.galleryStatus, "Fotky se nepodarilo nacist. Zkuste pozdeji.", "error");
     }
   } finally {
     elements.refreshButton.disabled = false;
